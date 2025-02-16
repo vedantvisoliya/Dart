@@ -8,7 +8,7 @@ int generateRandNum()
   return randomNum;
 }
 
-int getUserInput()
+int? getUserInput()
 {
   int userInput;
   bool exit = false;
@@ -17,7 +17,11 @@ int getUserInput()
   {   
     stdout.write("Enter the number: ");
     String? tempUserInput = stdin.readLineSync();
-    if(tempUserInput != "")
+    if(tempUserInput == "exit")
+    {
+      return null;
+    }
+    else if(tempUserInput != "")
     {
       userInput = int.parse(tempUserInput!);
       return userInput;
@@ -32,14 +36,15 @@ int getUserInput()
 void main()
 {
   int number = generateRandNum();
-  int userNumber;
+  int? userNumber;
   print('''
         WELCOME, To Number Guessing Game.
 
         You will be given 10 chances to guess
         a number between 1 to 100.
         Guess the Number.
-
+        
+        To exit the game type 'exit'
         ''');
   for(int i = 1; i <= 10; i++){
     userNumber = getUserInput();
@@ -50,6 +55,10 @@ void main()
             The correct number is $number.
             You guessed the number in ${i} chances.
             ''');
+      break;
+    }
+    else if (userNumber == null){
+      print("Exited successfully");
       break;
     }
     else if(userNumber > number)
